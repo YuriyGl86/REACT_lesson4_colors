@@ -1,0 +1,23 @@
+.container {
+    width: 800px;
+    height: 800px;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input {
+    all: unset;
+    height: 35px;
+    width: 150px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.rgb {
+    height: 35px;
+    width: 150px;
+    background-color: #fff;
+}
