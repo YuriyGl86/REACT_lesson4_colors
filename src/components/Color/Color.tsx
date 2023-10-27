@@ -1,8 +1,14 @@
 import React, { useRef, useState } from 'react'
 import classes from './color.module.css'
 
+
+export interface IColor {
+    hex: string;
+    rgb: string;
+}
+
 export  function Color() {
-    function hexToRgb(hex) {
+    function hexToRgb(hex: string) {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {
           r: parseInt(result[1], 16),
@@ -15,18 +21,20 @@ export  function Color() {
         hex:'#00ffff',
         rgb: '0 255 255'
     }
-    const [color, setColor] = useState(initialState)
+    const [color, setColor] = useState<IColor>(initialState)
     
-    const containerRef = useRef()
+    const containerRef = useRef<HTMLDivElement>(null)
 
-    const handleChange = ({ target }) => {
+    const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
         setColor(prev => {
             let newState = {...prev, [target.name]: target.value}
             if(target.value.length < 7) return newState
             const rgb = hexToRgb(target.value)
             if(rgb){
                 newState = {...newState, 'rgb': `${rgb.r} ${rgb.g} ${rgb.b}`}
-                containerRef.current.style.background = target.value
+                if(containerRef.current){
+                    containerRef.current.style.background = target.value
+                }
             } else {
                 newState = {...newState, 'rgb': `Ошибка!`}
             }
@@ -36,9 +44,10 @@ export  function Color() {
     }
 
     return (
-        <div className={classes.container} ref ={ containerRef }>
+        <div className={classes.container} ref = { containerRef }>
             <form>
                 <input
+                autoComplete='off'
                 name='hex' 
                 className={classes.input} 
                 type="text"
